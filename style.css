@@ -4,6 +4,16 @@ body {
     background-size: cover;
 }
 
+a:link {
+    color: green;
+    background-color: transparent;
+  }
+  
+  a:visited {
+    color: pink;
+    background-color: transparent;
+  }
+
 #chatbox{
     position: absolute;
     top: 30%;

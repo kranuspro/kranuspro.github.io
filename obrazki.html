@@ -20,23 +20,74 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <title>kranus.pro</title>
+
+    <style>
+        body {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        img {
+            max-width: 200px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 600px) {
+            img {
+                max-width: 100px;
+                margin: 10px;
+                cursor: pointer;
+            }
+        }
+    </style>
 </head>
+
+
 
 <body>
 
-    <script>
-        var folder = "fotki";
+    <marquee scrollamount="20">
+        <h1>selected gif works selected gif works selected gif works selected gif works </h1>
+        <h2 style="color:white;">kliknij zeby se pobrac hultaju!</h2>
+    <br>
+    </marquee>
+    
 
-        $.ajax({
-            url: folder,
-            success: function (data) {
-                $(data).find("a").attr("href", function (i, val) {
-                    if (val.match(/\.(jpe?g|png|gif)$/)) {
-                        $("body").append("<img src='" + val + "'>");
-                    }
-                });
+     <script>
+        function downloadImage(url) {
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'image.jpg';
+            link.target = '_blank';
+            link.click();
+        }
+
+        function checkIDRangeAndDisplayImages(startId, endId, url) {
+            for (let id = startId; id <= endId; id++) {
+                let imageUrl = url.replace('{id}', id);
+                let img = new Image();
+                img.src = imageUrl;
+                img.onload = function () {
+                    // Check if the image loaded successfully (valid response)
+                    img.onclick = function () {
+                        // Download the image when clicked
+                        downloadImage(imageUrl);
+                    };
+                    document.body.appendChild(img);
+                };
+                img.onerror = function () {
+                    // Check if the image failed to load (invalid response)
+                    console.log(`Invalid ID: ${id}`);
+                };
             }
-        });
+        }
+
+        // Example usage
+        const startId = 1;
+        const endId = 20;
+        const url = 'http://127.0.0.1:5500/fotki/{id}.gif';
+
+        checkIDRangeAndDisplayImages(startId, endId, url);
     </script>
 
 </body>
