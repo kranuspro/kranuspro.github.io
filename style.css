@@ -1,0 +1,68 @@
+body {
+    background-image: url("img/giphy.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#chatbox{
+    position: absolute;
+    top: 30%;
+    left: 87%;
+}
+
+#x {
+    background-color: rgb(94, 36, 94);
+    color: white;
+    padding: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    width: 50%;
+}
+
+.container {
+    display: flex;
+}
+
+.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    width: 50%;
+}
+
+h1 {
+    color: yellow;
+
+    text-decoration: overline underline;
+}
+
+#stopa_kocham_young_leosie_uwu {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .logo {
+        width: 90%;
+    }
+
+    body {
+        background-image: url("img/giphy.webp");
+        background-repeat: no-repeat;
+        background-size: 100% 400%;
+    }
+
+    #chatbox {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+    }
+    
+}
