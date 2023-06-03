@@ -54,40 +54,50 @@
     
 
      <script>
-        function downloadImage(url) {
+        async function downloadImage(url) {
             const link = document.createElement('a');
             link.href = url;
             link.download = 'kranus.pro.gif';
             link.target = '_blank';
             link.click();
-        }
-
-        function checkIDRangeAndDisplayImages(startId, endId, url) {
+          }
+          
+          async function checkIDRangeAndDisplayImages(startId, endId, url) {
+            const promises = [];
+          
             for (let id = startId; id <= endId; id++) {
-                let imageUrl = url.replace('{id}', id);
-                let img = new Image();
+              let imageUrl = url.replace('{id}', id);
+              let img = new Image();
+          
+              const promise = new Promise((resolve, reject) => {
+                img.onload = resolve;
+                img.onerror = reject;
                 img.src = imageUrl;
-                img.onload = function () {
-                    // Check if the image loaded successfully (valid response)
-                    img.onclick = function () {
-                        // Download the image when clicked
-                        downloadImage(imageUrl);
-                    };
-                    document.body.appendChild(img);
+              }).then(() => {
+                // Check if the image loaded successfully (valid response)
+                img.onclick = function () {
+                  // Download the image when clicked
+                  downloadImage(imageUrl);
                 };
-                img.onerror = function () {
-                    // Check if the image failed to load (invalid response)
-                    console.log(`Invalid ID: ${id}`);
-                };
+                document.body.appendChild(img);
+              }).catch(() => {
+                // Check if the image failed to load (invalid response)
+                console.log(`Invalid ID: ${id}`);
+              });
+          
+              promises.push(promise);
             }
-        }
-
-        // Example usage
-        const startId = 1;
-        const endId = 20;
-        const url = 'https://kranuspro.github.io/fotki/{id}.gif';
-
-        checkIDRangeAndDisplayImages(startId, endId, url);
+          
+            await Promise.all(promises);
+          }
+          
+          // Example usage
+          const startId = 1;
+          const endId = 30;
+          const url = 'https://kranus.pro/fotki/{id}.gif';
+          
+          checkIDRangeAndDisplayImages(startId, endId, url);
+          
     </script>
 
 </body>
