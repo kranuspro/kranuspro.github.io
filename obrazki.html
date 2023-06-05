@@ -2,103 +2,106 @@
 <html lang="pl">
 
 <head>
-    <meta charset="utf-8">
+  <meta charset="utf-8">
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta property='og:title' content='kranus.pro'>
-    <meta property='og:description' content='wiesz co? kranus.pro'>
+  <meta property='og:title' content='kranus.pro'>
+  <meta property='og:description' content='wiesz co? kranus.pro'>
 
-    <meta name="description" content="wiesz co? kranus.pro">
-    <meta name="keywords" content="kranus, kranuspro, wegiel, studio">
-    <meta name="author" content="Węgiel Studio">
+  <meta name="description" content="wiesz co? kranus.pro">
+  <meta name="keywords" content="kranus, kranuspro, wegiel, studio">
+  <meta name="author" content="Węgiel Studio">
 
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
-        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <title>kranus.pro</title>
+  <title>kranus.pro</title>
 
-    <style>
-        body {
-            display: flex;
-            flex-wrap: wrap;
-        }
-        img {
-            max-width: 200px;
-            margin: 10px;
-            cursor: pointer;
-        }
+  <style>
+    body {
+      display: flex;
+      flex-wrap: wrap;
+    }
 
-        @media screen and (max-width: 600px) {
-            img {
-                max-width: 100px;
-                margin: 10px;
-                cursor: pointer;
-            }
-        }
-    </style>
+    img {
+      max-width: 200px;
+      margin: 10px;
+      cursor: pointer;
+    }
+
+    @media screen and (max-width: 600px) {
+      img {
+        max-width: 100px;
+        margin: 10px;
+        cursor: pointer;
+      }
+    }
+  </style>
 </head>
 
 
 
 <body>
 
-    <marquee scrollamount="20">
-        <h1>selected gif works selected gif works selected gif works selected gif works </h1>
-        <h2 style="color:white;">kliknij zeby se pobrac hultaju!</h2>
+  <marquee scrollamount="20">
+    <h1>selected gif works selected gif works selected gif works selected gif works </h1>
+    <h2 style="color:white;">kliknij zeby se pobrac hultaju!</h2>
     <br>
-    </marquee>
-    
+  </marquee>
 
-     <script>
-        async function downloadImage(url) {
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'kranus.pro.gif';
-            link.target = '_blank';
-            link.click();
-          }
-          
-          async function checkIDRangeAndDisplayImages(startId, endId, url) {
-            const promises = [];
-          
-            for (let id = startId; id <= endId; id++) {
-              let imageUrl = url.replace('{id}', id);
-              let img = new Image();
-          
-              const promise = new Promise((resolve, reject) => {
-                img.onload = resolve;
-                img.onerror = reject;
-                img.src = imageUrl;
-              }).then(() => {
-                // Check if the image loaded successfully (valid response)
-                img.onclick = function () {
-                  // Download the image when clicked
-                  downloadImage(imageUrl);
-                };
-                document.body.appendChild(img);
-              }).catch(() => {
-                // Check if the image failed to load (invalid response)
-                console.log(`Invalid ID: ${id}`);
-              });
-          
-              promises.push(promise);
-            }
-          
-            await Promise.all(promises);
-          }
-          
-          // Example usage
-          const startId = 1;
-          const endId = 30;
-          const url = 'https://kranus.pro/fotki/{id}.gif';
-          
-          checkIDRangeAndDisplayImages(startId, endId, url);
-          
-    </script>
+
+  <script>
+    async function downloadImage(url) {
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'kranus.pro.gif';
+      link.target = '_blank';
+      link.click();
+    }
+
+    async function checkIDRangeAndDisplayImages(startId, endId, url) {
+      const promises = [];
+
+      for (let id = startId; id <= endId; id++) {
+        let imageUrl = window.location.origin + url.replace('{id}', id);
+        let img = new Image();
+
+        const promise = new Promise((resolve, reject) => {
+          img.onload = resolve;
+          img.onerror = reject;
+          img.src = imageUrl;
+        }).then(() => {
+          // Check if the image loaded successfully (valid response)
+          img.onclick = function () {
+            // Download the image when clicked
+            downloadImage(imageUrl);
+          };
+          document.body.appendChild(img);
+        }).catch(() => {
+          // Check if the image failed to load (invalid response)
+          console.log(`Invalid ID: ${id}`);
+        });
+
+        promises.push(promise);
+      }
+
+      await Promise.all(promises);
+    }
+
+    // Example usage
+    const startId = 1;
+    const endId = 100;
+    const url = '/fotki/{id}.gif';
+
+    checkIDRangeAndDisplayImages(startId, endId, url);
+
+    //i love chat gpt :3 :D !!!
+
+  </script>
 
 </body>
 
