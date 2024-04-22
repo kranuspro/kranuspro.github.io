@@ -1,24 +1,25 @@
 body {
     background-image: url("img/giphy.webp");
-    background-repeat: no-repeat;
     background-size: cover;
+    background-size: 100%;
 }
 
 a:link {
     color: green;
     background-color: transparent;
-  }
-  
-  a:visited {
+}
+
+a:visited {
     color: pink;
     background-color: transparent;
-  }
+}
 
-#chatbox{
+#chatbox {
     position: absolute;
     top: 30%;
     left: 87%;
 }
+
 #essa {
     background-color: rgb(94, 36, 94);
 }
@@ -61,25 +62,6 @@ h1 {
     text-align: center;
 }
 
-@media screen and (max-width: 600px) {
-    .logo {
-        width: 90%;
-    }
-
-    body {
-        background-image: url("img/giphy.webp");
-        background-repeat: no-repeat;
-        background-size: 100% 400%;
-    }
-
-    #chatbox {
-        position: absolute;
-        top: 30%;
-        left: 50%;
-    }
-    
-}
-
 .rainbow {
     text-align: center;
     text-decoration: underline;
@@ -87,8 +69,9 @@ h1 {
     font-family: monospace;
     letter-spacing: 1px;
 }
+
 .rainbow_text_animated {
-    background: linear-gradient(to right, #6666ff, #0099ff , #00ff00, #ff3399, #6666ff);
+    background: linear-gradient(to right, #6666ff, #0099ff, #00ff00, #ff3399, #6666ff);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -97,11 +80,35 @@ h1 {
 }
 
 @keyframes rainbow_animation {
-    0%,100% {
+
+    0%,
+    100% {
         background-position: 0 0;
     }
 
     50% {
         background-position: 100% 0;
+    }
+}
+
+@media (max-width: 600px) {
+    #chatbox {
+        display: none;
+    }
+
+    #x {
+        width: 90%;
+        padding: 10px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .logo {
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 20px;
     }
 }
