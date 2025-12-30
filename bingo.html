@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property='og:title' content='kranus.pro - BINGO'>
+  <meta property='og:description' content='Generator bingo - wygeneruj swoją planszę!'>
+
+  <meta name="description" content="Generator bingo - wygeneruj swoją planszę!">
+  <meta name="keywords" content="kranus, kranuspro, bingo, impreza, generator">
+  <meta name="author" content="Węgiel Studio">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8Q6LZVYWDM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-8Q6LZVYWDM');
+  </script>
+
+  <title>kranus.pro - BINGO</title>
+
+  <style>
+    body {
+      background-image: url("img/giphy.webp");
+      background-size: cover;
+      background-size: 100%;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: yellow;
+      text-decoration: overline underline;
+      text-align: center;
+    }
+
+    .controls {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .controls input {
+      padding: 10px;
+      background-color: rgb(94, 36, 94);
+      color: white;
+      border: 2px solid yellow;
+    }
+
+    .controls button {
+      padding: 10px 20px;
+      background-color: rgb(94, 36, 94);
+      color: yellow;
+      border: 2px solid yellow;
+      cursor: pointer;
+    }
+
+    #bingo-card {
+      background-color: rgb(94, 36, 94);
+      padding: 10px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: fit-content;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    th {
+      background-color: yellow;
+      color: rgb(94, 36, 94);
+      padding: 10px 20px;
+      border: 2px solid white;
+      font-size: 24px;
+    }
+
+    td {
+      background-color: white;
+      color: black;
+      padding: 10px;
+      border: 2px solid rgb(94, 36, 94);
+      text-align: center;
+      width: 120px;
+      height: 80px;
+      font-size: 11px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    td:hover {
+      background-color: #ddd;
+    }
+
+    td.marked {
+      background-color: green;
+      color: white;
+    }
+
+    td.free {
+      background-color: yellow;
+      color: black;
+    }
+
+    .seed-display {
+      text-align: center;
+      margin-top: 15px;
+      color: white;
+    }
+
+    @media screen and (max-width: 700px) {
+      td {
+        width: 50px;
+        height: 50px;
+        font-size: 8px;
+        padding: 5px;
+      }
+
+      th {
+        font-size: 16px;
+        padding: 5px 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🎉 BINGO SYLWESTER METKOW !!!1!! 🎉</h1>
+
+  <div class="controls">
+    <input type="text" id="seed-input" placeholder="Wpisz seed...">
+    <button onclick="generateBingo()">GENERUJ!</button>
+  </div>
+
+  <div id="bingo-card">
+    <table id="bingo-table">
+      <thead>
+        <tr>
+          <th>B</th>
+          <th>I</th>
+          <th>N</th>
+          <th>G</th>
+          <th>O</th>
+        </tr>
+      </thead>
+      <tbody id="bingo-body">
+      </tbody>
+    </table>
+  </div>
+
+  <div class="seed-display" id="seed-display"></div>
+
+  <script>
+    const items = [
+      "Pijemy",
+      "Ktoś zajebał zgona",
+      "Ktoś się pobił",
+      "Ktoś dosypał weedu",
+      "Ktoś dosypał LSD",
+      "Ktoś wyszedł wkurwiony i nie wrócił",
+      "Dwie osoby znikły na podejrzanie długo",
+      "Ktoś się zrzygał",
+      "Przyszedł niezapowiedziany gość",
+      "Ktoś coś rozbił",
+      "DJ CHUJ",
+      "Ktoś zasnął przed 23:59",
+      "Ktoś krzyknął \"Kocham żydów\"",
+      "Ktoś zaczął płakać",
+      "Ktoś zgubił telefon",
+      "Ktoś zgubił gumki",
+      "Ktoś grał na gitarze jakieś gówno",
+      "Ktoś grał na gitarze jakieś cool gówno",
+      "Wjazd policji",
+      "Wjazd sąsiadów",
+      "Dziura w ____",
+      "Koniec wódki",
+      "Koniec popity",
+      "Ktoś rzygał przez balkon",
+      "Disco Polo moment"
+    ];
+
+    function seededRandom(seed) {
+      let hash = 0;
+      for (let i = 0; i < seed.length; i++) {
+        const char = seed.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+      }
+      
+      return function() {
+        hash = Math.sin(hash) * 10000;
+        return hash - Math.floor(hash);
+      };
+    }
+
+    function shuffleArray(array, rng) {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    }
+
+    function generateBingo() {
+      let seed = document.getElementById('seed-input').value.trim();
+      if (!seed) {
+        seed = Math.random().toString(36).substring(2, 10);
+        document.getElementById('seed-input').value = seed;
+      }
+
+      const rng = seededRandom(seed);
+      const shuffled = shuffleArray(items, rng);
+      const selected = shuffled.slice(0, 24);
+
+      const tbody = document.getElementById('bingo-body');
+      tbody.innerHTML = '';
+
+      let itemIndex = 0;
+      for (let row = 0; row < 5; row++) {
+        const tr = document.createElement('tr');
+        for (let col = 0; col < 5; col++) {
+          const td = document.createElement('td');
+          
+          if (row === 2 && col === 2) {
+            td.className = 'free marked';
+            td.textContent = 'bingo :D';
+            td.innerHTML = '<img src="img/kret.png" alt="FREE" style="max-width: 100%;" >';
+          } else {
+            td.textContent = selected[itemIndex];
+            td.onclick = function() {
+              this.classList.toggle('marked');
+            };
+            itemIndex++;
+          }
+          
+          tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+      }
+
+      document.getElementById('seed-display').textContent = 'Seed: ' + seed;
+    }
+
+    generateBingo();
+  </script>
+
+</body>
+
+</html>
